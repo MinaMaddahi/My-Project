@@ -9,42 +9,67 @@ using UnityEngine.UI; // to abe to interact with button
 
 public class PlayerController : MonoBehaviour
 {
+    
     public float speed = 15.0f;
     public float turnspeed;
     public float horizontalInput;
     public float forwardInput;
-    public GameObject projectilePrefab;
-    public ParticleSystem getScoreParticale;
     public float jumpForce = 10;
     public float gravityModifire;
-    public bool isOnGround = true;
     public float bound = 5;
+    private int score;
+    public GameObject projectilePrefab;
+    public GameObject powerupIndicator;
+    public ParticleSystem getScoreParticale;
+    public GameObject titleScreen;
+    public bool isOnGround = true;
     public bool gameOver = false;
+    public bool hasPowerUp = false;
     public AudioClip jumpSound;
     public AudioClip crashSound;
-    public bool hasPowerUp = false;
-    public GameObject powerupIndicator;
+    private AudioSource playerAudio;
+    private Animator playerAnim;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI gameOverText;
     public Button restatrButton;
-    public GameObject titleScreen;
-
     private Rigidbody playerRb;
-    private AudioSource playerAudio;
-    private Animator playerAnim;
-    private int score;
+
+    public GameObject wellcomeScreen;
+    public Button closButton;
+  // private bool gamestarted = false;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
+
         score = 0;
         UpdateScore(0);
-        
+
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
         playerAudio = GetComponent<AudioSource>();
         Physics.gravity *= gravityModifire;  // change the gravity
         titleScreen.gameObject.SetActive(false);
-        
+       // closButton.GetComponent<Button>();
+      // closButton.onClick.AddListener(StartGame);
+    }
+   public void StartGame()
+    {
+      //  if (gamestarted == true)
+        {
+            // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            closButton.gameObject.SetActive(false);
+            wellcomeScreen.gameObject.SetActive(false);
+           // Debug.Log("was clicked");
+         //   StartGame();
+
+
+
+
+            // gamestarted = true;
+        }
     }
 
     // Update is called once per frame
@@ -143,7 +168,7 @@ public class PlayerController : MonoBehaviour
     }
     public void GameOverText()
     {
-        restatrButton.gameObject.SetActive(true);
+        restatrButton.gameObject.SetActive(true); // to pop up game over text
         gameOverText.gameObject.SetActive(true);
     }
     public void ReStartGame() // to be able to reload our scene
@@ -151,7 +176,9 @@ public class PlayerController : MonoBehaviour
         
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-    }
+    
+    
+}
 
 
  

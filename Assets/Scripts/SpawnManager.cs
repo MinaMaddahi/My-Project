@@ -8,15 +8,16 @@ public class SpawnManager : MonoBehaviour
     public GameObject[] animalPrefabs; //is a reference to the Power-Up prefab
     public GameObject powerUpPrefab;
     private float nextSpawnTime; //keeps track of when the next power-up should be spawned.
-    private float rightspawnRangeX = 65;
-    private float leftspawnRangeX = -19;
-    private float spawnPosZ = 6;
+    private float rightspawnRangeX = 59;
+    private float leftspawnRangeX = -18;
+    private float spawnPosZ = 5;
     private float startDelay = 1.0f;
     private float spawnInterval = 2.0f; //is the time interval (in seconds) between spawns for animals
     private float spawnIntervalPoweup = 20;// is the time interval (in seconds) between spawns for powerup
     public Vector3 spawnAreaCenter = Vector3.zero; //// Center of the spawn area
-    public Vector3 spawnAreaSize = new Vector3(10f, 0f, 60f); // Size of the spawn area.
+    public Vector3 spawnAreaSize = new Vector3(8f, 0f, 50f); // Size of the spawn area.
     private PlayerController playercontrollerScript;
+  
   
 
     // Start is called before the first frame update
@@ -26,12 +27,14 @@ public class SpawnManager : MonoBehaviour
         playercontrollerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         // constantly repeating spawn animals 
         InvokeRepeating("SpawnRandomAnimal", startDelay, spawnInterval);
+      
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.time >= nextSpawnTime)
+        if (Time.time >= nextSpawnTime &&  (playercontrollerScript.gameOver == false))
         {
             SpawnPowerUp();
             nextSpawnTime = Time.time + spawnIntervalPoweup;
@@ -43,7 +46,7 @@ public class SpawnManager : MonoBehaviour
         {
             // Randomly generate animals index and spawn position
 
-            Vector3 spawnPos = new Vector3(Random.Range(leftspawnRangeX, rightspawnRangeX), 0, Random.Range(0, -spawnPosZ));
+            Vector3 spawnPos = new Vector3(Random.Range(leftspawnRangeX, rightspawnRangeX), 0, Random.Range(2, -spawnPosZ));
             int animalIndex = Random.Range(0, animalPrefabs.Length);
 
             Instantiate(animalPrefabs[animalIndex], spawnPos, animalPrefabs[animalIndex].transform.rotation);
